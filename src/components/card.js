@@ -1,6 +1,6 @@
 const cardTemplate = document.querySelector("#card-template")?.content;
 
-export function createCard(cardData, handleImageClick) {
+export function createCard(cardData, handleImageClick, handleLikeClick, handleDeleteClick) {
     if (!cardTemplate) {
         return;
     }
@@ -15,19 +15,8 @@ export function createCard(cardData, handleImageClick) {
     cardImage.alt = cardData.name;
     cardTitle.textContent = cardData.name;
 
-    function toggleLike() {
-        likeButton.classList.toggle("card__like-button_is-active");
-    }
-
-    function removeCard() {
-        likeButton.removeEventListener("click", toggleLike);
-        cardImage.removeEventListener("click", () => handleImageClick(cardData));
-        deleteButton.removeEventListener("click", removeCard);
-        cardElement.remove();
-    }
-
-    deleteButton.addEventListener("click", removeCard);
-    likeButton.addEventListener("click", toggleLike);
+    likeButton.addEventListener("click", () => handleLikeClick(likeButton));
+    deleteButton.addEventListener("click", () => handleDeleteClick(cardElement));
     cardImage.addEventListener("click", () => handleImageClick(cardData));
 
     return cardElement;
