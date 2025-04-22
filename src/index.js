@@ -99,7 +99,6 @@ function handleAddCardFormSubmit(evt) {
   );
 
   cardContainer.prepend(newCard);
-  form.reset();
   resetFormState(form, config);
   closeModal(modals.addCard);
 }
