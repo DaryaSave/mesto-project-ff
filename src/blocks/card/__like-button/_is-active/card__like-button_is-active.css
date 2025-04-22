@@ -1,8 +1,0 @@
-.card__like-button_is-active {
-  mask-image: url('../../../../images/like-active.svg');
-  -webkit-mask-image: url('../../../../images/like-active.svg');
-  background: none;
-  mask-size: cover;
-  -webkit-mask-size: cover;
-  background-color: black; 
-}
