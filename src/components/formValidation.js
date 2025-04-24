@@ -23,26 +23,28 @@ const hideInputError = (formElement, inputElement, config) => {
 
 // Функция, которая проверяет валидность поля
 const isValid = (formElement, inputElement, config) => {
-  if (!inputElement.validity.valid) {
-    // Если ошибка в паттерне и есть кастомное сообщение, используем его
-    if (
-      inputElement.validity.patternMismatch &&
-      inputElement.dataset.errorMessage
-    ) {
-      showInputError(
-        formElement,
-        inputElement,
-        inputElement.dataset.errorMessage,
-        config
-      );
-    } else {
-      showInputError(
-        formElement,
-        inputElement,
-        inputElement.validationMessage,
-        config
-      );
-    }
+  // Сбрасываем предыдущие кастомные сообщения об ошибке
+  inputElement.setCustomValidity("");
+
+  // 1) Пустое поле
+  if (inputElement.validity.valueMissing) {
+    // берём сообщение из data-error-required
+    const message = inputElement.dataset.errorRequired || "Поле обязательное";
+    inputElement.setCustomValidity(message);
+  }
+  // 2) Неправильный формат URL
+  else if (inputElement.validity.typeMismatch) {
+    const message = inputElement.dataset.errorUrl || "Поле содержит именно URL в корректном формате";
+    inputElement.setCustomValidity(message);
+  }
+  // 3) Несоответствие паттерну (если указано своё сообщение)
+  else if (inputElement.validity.patternMismatch && inputElement.dataset.errorMessage) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  }
+
+  // После установки кастомной валидации показываем либо скрываем ошибку
+  if (!inputElement.checkValidity()) {
+    showInputError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
     hideInputError(formElement, inputElement, config);
   }
