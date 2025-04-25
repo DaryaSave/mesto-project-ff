@@ -4,14 +4,13 @@
   "description": "",
   "main": "src/index.js",
   "homepage": "https://daryasave.github.io/mesto-project-ff",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development",
     "predeploy": "npm run build",
-   "deploy": "gh-pages -d dist"
- },
+    "deploy": "gh-pages -d dist"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -40,5 +39,4 @@
     "glob": "^11.0.1",
     "rimraf": "^6.0.1"
   }
-    
 }
