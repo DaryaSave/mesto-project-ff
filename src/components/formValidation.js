@@ -29,17 +29,27 @@ const isValid = (formElement, inputElement, config) => {
   }
   // 2) Неправильный формат URL
   else if (inputElement.validity.typeMismatch) {
-    const message = inputElement.dataset.errorUrl || "Поле содержит именно URL в корректном формате";
+    const message =
+      inputElement.dataset.errorUrl ||
+      "Поле содержит именно URL в корректном формате";
     inputElement.setCustomValidity(message);
   }
   // 3) Несоответствие паттерну
-  else if (inputElement.validity.patternMismatch && inputElement.dataset.errorMessage) {
+  else if (
+    inputElement.validity.patternMismatch &&
+    inputElement.dataset.errorMessage
+  ) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   }
 
   // Кастомная валидация (показываем/скрываем ошибку)
   if (!inputElement.checkValidity()) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, config);
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      config
+    );
   } else {
     hideInputError(formElement, inputElement, config);
   }
@@ -91,23 +101,10 @@ export const enableValidation = (config) => {
 };
 
 // Очистка ошибок валидации
-/*export const clearValidationErrors = (formElement, config) => {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-  const buttonElement = formElement.querySelector(".popup__button");
-
-  inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, {
-      inputErrorClass: "popup__input_type_error",
-      errorClass: "popup__input-error_active",
-    });
-  });
-
-  buttonElement.classList.add("popup__button_disabled");
-  buttonElement.disabled = true;
-};*/
-
 export const clearValidationErrors = (formElement, config) => {
-  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const inputList = Array.from(
+    formElement.querySelectorAll(config.inputSelector)
+  );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
 
   inputList.forEach((inputElement) => {
@@ -118,9 +115,8 @@ export const clearValidationErrors = (formElement, config) => {
   buttonElement.disabled = true;
 };
 
-
 // Сброс состояния формы
 export const resetFormState = (formElement, config) => {
   formElement.reset();
-  clearValidationErrors(formElement);
+  clearValidationErrors(formElement, config);
 };

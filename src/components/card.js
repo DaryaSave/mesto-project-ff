@@ -1,9 +1,39 @@
+import { likeCard, unlikeCard, deleteCard } from "./api.js";
+
 const cardTemplate = document.querySelector("#card-template")?.content;
+
+// Обработчик лайка
+export function likeButtonClick(cardId, isLiked, likeButton, likeCounter) {
+  const likeFunction = isLiked ? unlikeCard : likeCard;
+
+  return likeFunction(cardId)
+    .then((updatedCard) => {
+      likeButton.classList.toggle("card__like-button_is-active");
+      likeCounter.textContent = updatedCard.likes.length;
+      return updatedCard;
+    })
+    .catch((err) => {
+      console.error("Ошибка при обработке лайка:", err);
+      throw err;
+    });
+}
+
+// Обработчик удаления
+export function handleDeleteClick(cardId, cardElement) {
+  return deleteCard(cardId)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.error("Ошибка при удалении карточки:", err);
+      throw err;
+    });
+}
 
 export function createCard(
   cardData,
   openImageModal,
-  handleLikeClick,
+  likeButtonClick,
   handleDeleteClick
 ) {
   if (!cardTemplate) {
@@ -57,12 +87,12 @@ export function createCard(
     }
   }
 
-  // Обработчик событий
+  // Обработчик событий лайка
   likeButton.addEventListener("click", () => {
     const isLiked = likeButton.classList.contains(
       "card__like-button_is-active"
     );
-    handleLikeClick(cardData._id, isLiked);
+    likeButtonClick(cardData._id, isLiked, likeButton, likeCounter);
   });
 
   // Кнопку удаления только для своих карточек
@@ -70,7 +100,7 @@ export function createCard(
     deleteButton.remove();
   } else {
     deleteButton.addEventListener("click", () =>
-      handleDeleteClick(cardData._id)
+      handleDeleteClick(cardData._id, cardElement)
     );
   }
 
