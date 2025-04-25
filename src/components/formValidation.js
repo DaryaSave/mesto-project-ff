@@ -1,6 +1,3 @@
-// Регулярное выражения для проверки текста
-const nameRegex = /^[a-zA-Zа-яА-ЯёЁ\- ]+$/;
-
 // Добавляем класс с ошибкой
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
@@ -94,7 +91,7 @@ export const enableValidation = (config) => {
 };
 
 // Очистка ошибок валидации
-export const clearValidationErrors = (formElement) => {
+/*export const clearValidationErrors = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   const buttonElement = formElement.querySelector(".popup__button");
 
@@ -107,7 +104,20 @@ export const clearValidationErrors = (formElement) => {
 
   buttonElement.classList.add("popup__button_disabled");
   buttonElement.disabled = true;
+};*/
+
+export const clearValidationErrors = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, config);
+  });
+
+  buttonElement.classList.add(config.inactiveButtonClass);
+  buttonElement.disabled = true;
 };
+
 
 // Сброс состояния формы
 export const resetFormState = (formElement, config) => {

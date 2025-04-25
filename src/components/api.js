@@ -109,36 +109,3 @@ export function updateAvatar(avatarUrl) {
     }),
   }).then(handleResponse);
 }
-
-// Функция для удаления карточки по ID
-export function deleteCardById(cardId) {
-  return deleteCard(cardId)
-    .then((res) => {
-      console.log(`Карточка с ID ${cardId} удалена`, res);
-    })
-    .catch((err) => {
-      console.error(`Ошибка при удалении карточки: ${err}`);
-    });
-}
-
-// Функция для обновления профиля
-export function updateProfile(name, about) {
-  return updateUserInfo(name, about)
-    .then((res) => {
-      console.log("Профиль обновлен", res);
-    })
-    .catch((err) => {
-      console.error(`Ошибка при обновлении профиля: ${err}`);
-    });
-}
-
-// Функция для добавления новой карточки
-export function addNewCard(name, link) {
-  return addCard(name, link)
-    .then((res) => {
-      console.log("Новая карточка добавлена", res);
-    })
-    .catch((err) => {
-      console.error(`Ошибка при добавлении карточки: ${err}`);
-    });
-}

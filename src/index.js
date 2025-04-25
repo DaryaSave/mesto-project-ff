@@ -29,6 +29,7 @@
   ).style.backgroundImage = `url(${avatar})`;
   
   const config = {
+    formSelector: ".popup__form",
     inputSelector: ".popup__input",
     submitButtonSelector: ".popup__button",
     inactiveButtonClass: "popup__button_disabled",
@@ -155,7 +156,7 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
       })
       .finally(() => toggleButtonText(submitBtn, false, defaultText));
   }
-  
+
   // Обработчик отправки формы добавления карточки
   function handleAddCardFormSubmit(evt) {
     evt.preventDefault();
@@ -209,6 +210,38 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
      .finally(() => toggleButtonText(submitBtn, false, defaultText));
   }
   
+  // Функция для удаления карточки по ID
+export function deleteCardById(cardId) {
+  return deleteCard(cardId)
+    .then((res) => {
+      console.log(`Карточка с ID ${cardId} удалена`, res);
+    })
+    .catch((err) => {
+      console.error(`Ошибка при удалении карточки: ${err}`);
+    });
+}
+
+// Функция для обновления профиля
+export function updateProfile(name, about) {
+  return updateUserInfo(name, about)
+    .then((res) => {
+      console.log("Профиль обновлен", res);
+    })
+    .catch((err) => {
+      console.error(`Ошибка при обновлении профиля: ${err}`);
+    });
+}
+
+  // Функция для добавления новой карточки
+  export function addNewCard(name, link) {
+    return addCard(name, link)
+      .then((res) => {
+        console.log("Новая карточка добавлена", res);
+      })
+      .catch((err) => {
+        console.error(`Ошибка при добавлении карточки: ${err}`);
+      });
+  }
   // === Слушатели ===
   
   // Открытие формы редактирования профиля
@@ -220,7 +253,7 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
     nameInput.value = profileName.textContent.trim();
     aboutInput.value = profileAbout.textContent.trim();
   
-    clearValidationErrors(form);
+    clearValidationErrors(form, config);
     openModal(modals.editProfile);
   });
   
@@ -228,7 +261,7 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
   addCardButton?.addEventListener("click", () => {
     const form = modals.addCard.querySelector(".popup__form");
     form.reset();
-    clearValidationErrors(form);
+    clearValidationErrors(form, config);
     openModal(modals.addCard);
   });
   
@@ -236,7 +269,7 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
   avatarButton?.addEventListener('click', () => {
     const form = modals.avatar.querySelector('.popup__form');
     form.reset();
-    clearValidationErrors(form);
+    clearValidationErrors(form, config);
     openModal(modals.avatar);
   });
 
@@ -265,15 +298,8 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
     .addEventListener("submit", handleAvatarFormSubmit);
   
   // Включение валидации
-  enableValidation({
-    formSelector: ".popup__form",
-    inputSelector: ".popup__input",
-    submitButtonSelector: ".popup__button",
-    inactiveButtonClass: "popup__button_disabled",
-    inputErrorClass: "popup__input_type_error",
-    errorClass: "popup__input-error_visible",
-  });
-  
+  enableValidation(config);
+
   // Загрузка данных при старте
   Promise.all([getUserInfo(), getInitialCards()])
     .then(([userData, cards]) => {
