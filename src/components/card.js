@@ -27,7 +27,7 @@ export function createCard(
     ".card__like-container .card__like-count"
   );
 
-  // Проверяем наличие основных элементов
+  // Основные элементы
   if (
     !cardImage ||
     !cardTitle ||
@@ -39,15 +39,15 @@ export function createCard(
     return null;
   }
 
-  // Устанавливаем данные карточки
+  // Данные карточки
   cardImage.src = cardData.link || "";
   cardImage.alt = cardData.name || "";
   cardTitle.textContent = cardData.name || "";
 
-  // Устанавливаем количество лайков
+  // Количество лайков
   likeCounter.textContent = cardData.likes ? cardData.likes.length : 0;
 
-  // Проверяем, есть ли наш лайк на карточке
+  // Проверяем, есть ли лайк на карточке
   if (cardData.likes && cardData.currentUserId) {
     const isLiked = cardData.likes.some(
       (user) => user._id === cardData.currentUserId
@@ -57,7 +57,7 @@ export function createCard(
     }
   }
 
-  // Добавляем обработчики событий
+  // Обработчик событий
   likeButton.addEventListener("click", () => {
     const isLiked = likeButton.classList.contains(
       "card__like-button_is-active"
@@ -65,7 +65,7 @@ export function createCard(
     handleLikeClick(cardData._id, isLiked);
   });
 
-  // Показываем кнопку удаления только для своих карточек
+  // Кнопку удаления только для своих карточек
   if (cardData.owner._id !== cardData.currentUserId) {
     deleteButton.remove();
   } else {

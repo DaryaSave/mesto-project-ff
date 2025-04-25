@@ -52,24 +52,24 @@
   const addCardButton = document.querySelector(".profile__add-button");
   const avatarButton = document.querySelector('.profile__image');
   
-  // Получаем кнопку-аватар
+  // Кнопка-аватар
 const avatarBtn = document.querySelector('.profile__image');
 
-// Динамически добавляем спан для иконки, если его нет
+// Спан для иконки
 if (!avatarBtn.querySelector('.profile__edit-icon')) {
   const icon = document.createElement('span');
   icon.classList.add('profile__edit-icon');
   avatarBtn.append(icon);
 }
 
-// Теперь ставим фон (URL аватара из сборки)
+// Ставим фон (URL аватара из сборки)
 avatarBtn.style.backgroundImage = `url(${avatar})`;
 
   // Элементы профиля
   const profileName = document.querySelector(".profile__title");
   const profileAbout = document.querySelector(".profile__description");
   
-  let currentUserId; // Добавляем переменную для хранения ID текущего пользователя
+  let currentUserId;
   
   // Общая функция для переключения текста кнопки
   function toggleButtonText(button, isLoading, defaultText) {
@@ -124,7 +124,7 @@ avatarBtn.style.backgroundImage = `url(${avatar})`;
   function renderCards(cards) {
     cards.forEach((cardData) => {
       const cardElement = createCard(
-        { ...cardData, currentUserId }, // Добавляем ID текущего пользователя к данным карточки
+        { ...cardData, currentUserId },
         openImageModal,
         handleLikeClick,
         handleDeleteClick

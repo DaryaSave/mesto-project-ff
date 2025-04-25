@@ -1,7 +1,7 @@
-// Регулярные выражения для проверки текста
+// Регулярное выражения для проверки текста
 const nameRegex = /^[a-zA-Zа-яА-ЯёЁ\- ]+$/;
 
-// Функция, которая добавляет класс с ошибкой
+// Добавляем класс с ошибкой
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   if (errorElement) {
@@ -11,7 +11,7 @@ const showInputError = (formElement, inputElement, errorMessage, config) => {
   }
 };
 
-// Функция, которая удаляет класс с ошибкой
+// Удаляем класс с ошибкой
 const hideInputError = (formElement, inputElement, config) => {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   if (errorElement) {
@@ -21,14 +21,12 @@ const hideInputError = (formElement, inputElement, config) => {
   }
 };
 
-// Функция, которая проверяет валидность поля
+//  Проверяем валидность поля
 const isValid = (formElement, inputElement, config) => {
-  // Сбрасываем предыдущие кастомные сообщения об ошибке
   inputElement.setCustomValidity("");
 
   // 1) Пустое поле
   if (inputElement.validity.valueMissing) {
-    // берём сообщение из data-error-required
     const message = inputElement.dataset.errorRequired || "Поле обязательное";
     inputElement.setCustomValidity(message);
   }
@@ -37,12 +35,12 @@ const isValid = (formElement, inputElement, config) => {
     const message = inputElement.dataset.errorUrl || "Поле содержит именно URL в корректном формате";
     inputElement.setCustomValidity(message);
   }
-  // 3) Несоответствие паттерну (если указано своё сообщение)
+  // 3) Несоответствие паттерну
   else if (inputElement.validity.patternMismatch && inputElement.dataset.errorMessage) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   }
 
-  // После установки кастомной валидации показываем либо скрываем ошибку
+  // Кастомная валидация (показываем/скрываем ошибку)
   if (!inputElement.checkValidity()) {
     showInputError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
@@ -50,15 +48,14 @@ const isValid = (formElement, inputElement, config) => {
   }
 };
 
-// Функция принимает массив полей
+// Принимаем массив полей
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
-// Функция принимает массив полей ввода
-// и элемент кнопки, состояние которой нужно менять
+// Массив полей ввода и элемент кнопки
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
@@ -75,7 +72,7 @@ const setEventListeners = (formElement, config) => {
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
 
-  // Вызовем toggleButtonState, чтобы проверить состояние кнопки в самом начале
+  // Проверяем состояние кнопки в самом начале
   toggleButtonState(inputList, buttonElement, config);
 
   inputList.forEach((inputElement) => {
@@ -96,7 +93,7 @@ export const enableValidation = (config) => {
   });
 };
 
-// Функция очистки ошибок валидации
+// Очистка ошибок валидации
 export const clearValidationErrors = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   const buttonElement = formElement.querySelector(".popup__button");
@@ -112,7 +109,7 @@ export const clearValidationErrors = (formElement) => {
   buttonElement.disabled = true;
 };
 
-// Функция сброса состояния формы
+// Сброс состояния формы
 export const resetFormState = (formElement, config) => {
   formElement.reset();
   clearValidationErrors(formElement);

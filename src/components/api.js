@@ -1,6 +1,6 @@
-const BASE_URL = "https://mesto.nomoreparties.co/v1/wff-cohort-36"; // Добавляем GROUP_ID в базовый URL
-const TOKEN = "1edbed4a-9f7a-4d96-b1b9-f5fbaa1e4e60"; // Ваш токен
-const GROUP_ID = "wff-cohort-36"; // Возвращаем правильный формат
+const BASE_URL = "https://mesto.nomoreparties.co/v1/wff-cohort-36"; 
+const TOKEN = "1edbed4a-9f7a-4d96-b1b9-f5fbaa1e4e60"; 
+const GROUP_ID = "wff-cohort-36"; 
 
 // Функция для обработки ошибок ответа сервера
 function handleResponse(res) {
@@ -11,7 +11,7 @@ function handleResponse(res) {
 
 }
 
-// Получить информацию о пользователе
+// Получаем информацию о пользователе
 export function getUserInfo() {
     return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
@@ -22,7 +22,7 @@ export function getUserInfo() {
   }).then(handleResponse);
 }
 
-// Обновить информацию о пользователе
+// Обновляем информацию о пользователе
 export function updateUserInfo(name, about) {
     return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
@@ -37,7 +37,7 @@ export function updateUserInfo(name, about) {
   }).then(handleResponse);
 }
 
-// Получить все карточки
+// Получаем все карточки
 export function getInitialCards() {
   return fetch(`${BASE_URL}/cards`, {
     method: "GET",
@@ -48,7 +48,7 @@ export function getInitialCards() {
   }).then(handleResponse);
 }
 
-// Добавить новую карточку
+// Добавляем новую карточку
 export function addCard(name, link) {
   return fetch(`${BASE_URL}/cards`, {
     method: "POST",
@@ -63,7 +63,7 @@ export function addCard(name, link) {
   }).then(handleResponse);
 }
 
-// Удалить карточку по ID
+// Удаляем карточку по ID
 export function deleteCard(cardId) {
   return fetch(`${BASE_URL}/cards/${cardId}`, {
     method: "DELETE",
@@ -74,7 +74,7 @@ export function deleteCard(cardId) {
   }).then(handleResponse);
 }
 
-// Лайкнуть карточку
+// Лайк карточки
 export function likeCard(cardId) {
   return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
     method: "PUT",
@@ -85,7 +85,7 @@ export function likeCard(cardId) {
   }).then(handleResponse);
 }
 
-// Убрать лайк с карточки
+// Убраем лайк с карточки
 export function unlikeCard(cardId) {
   return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
     method: "DELETE",
@@ -96,7 +96,7 @@ export function unlikeCard(cardId) {
   }).then(handleResponse);
 }
 
-// Обновить аватар пользователя
+// Обновдяем аватар пользователя
 export function updateAvatar(avatarUrl) {
   return fetch(`${BASE_URL}/users/me/avatar`, {
     method: "PATCH",
