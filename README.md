@@ -1,4 +1,4 @@
 # Проектная работа Mesto
-https://students-yandex.github.io/mesto-project
+https://daryasave.github.io/mesto-project-ff/
 # students-yandex – DaryaSave (имя на GitHub)
 # mesto-project – mesto-project-ff (название репозитория)
